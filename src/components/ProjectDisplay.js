@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, List, Segment, Container, Transition, Label, Button } from "semantic-ui-react";
+import { Header, List, Segment, Container, Transition, Label, Button, Icon } from "semantic-ui-react";
 import "./App.css";
 
 class ProjectDisplay extends Component {
@@ -15,7 +15,7 @@ class ProjectDisplay extends Component {
     var currTags = {};
     allTags.map(tag => currTags = Object.assign({}, currTags, {[tag]: false}));
 
-    this.state = { allTags, currTags };
+    this.state = { currTags };
   }
 
   toggleTag = (event, {value}) => {
@@ -42,14 +42,23 @@ class ProjectDisplay extends Component {
 
   render() {
     const {projects} = this.props;
-    const {allTags, currTags} = this.state;
+    const {currTags} = this.state;
 
     return (
-      <Container text textAlign = "left">
+      <Container text textAlign = "left" style = {{margin: "2em"}}>
         <Header as = "h2" content = "Projects"/>
         <Segment attached = "top" inverted>
           <Header content = "Filter by tag:" size = "small"/>
-          {allTags.map(tag => (<Button compact size = "small" basic = {!currTags[tag]} key = {tag} value = {tag} content = {tag} color = "orange" onClick = {this.toggleTag}/>))}
+          {Object.keys(currTags).sort().map(tag =>
+            (<Button compact size = "small" color = "orange"
+              basic = {!currTags[tag]}
+              key = {tag}
+              value = {tag}
+              content = {tag}
+              onClick = {this.toggleTag}
+              />
+            )
+          )}
         </Segment>
         <Segment attached = "bottom">
           {projects.map(project =>
@@ -66,16 +75,23 @@ class ProjectItem extends Component {
 
   render() {
     const {visible} = this.props;
-    const {title, description, tags} = this.props.project;
+    const {title, subtitle, github, description, tags} = this.props.project;
     return (
       <Transition visible = {visible} animation = "fade left">
         <Segment basic>
-          <Header attached = "top" size = "huge" content = {title}/>
-          <Segment attached size = "large" >
-            {description && <List bulleted items = {description} />}
+          <Segment attached = "top" clearing>
+            <Header size = "large" content = {title} subheader = {subtitle} floated = "left"  style = {{margin:0, padding: 0}}/>
+            <Segment basic floated = "right" style = {{margin:0, padding: 0}}>
+              {github && <a title = {github} href = {"https://github.com/" + github} target = "_blank">
+                <div><Icon size = "big" link name = "github"/>{github}</div>
+              </a>}
+            </Segment>
           </Segment>
-          <Segment attached = "bottom" >
+          <Segment attached>
             {tags.map(tag => (<Label key = {tag} content = {tag} color = "orange" size = "large"/>))}
+          </Segment>
+          <Segment attached = "bottom" size = "large">
+            {description && <List relaxed items = {description} />}
           </Segment>
         </Segment>
       </Transition>

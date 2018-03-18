@@ -19,13 +19,13 @@ class PersonalHeader extends Component {
           {location && <List.Item icon = "marker"
                                   content = {location} />}
           {email    && <List.Item icon = "mail"
-                                  content = {<a href={"mailto:" + email} target="_blank">Email</a>} />}
+                                  content = {<a target = "_blank" title = "Email me" href = {"mailto:" + email}>Email</a>} />}
           {github   && <List.Item icon = "github"
-                                  content = {<a href={"https://github.com/" + github} target="_blank">Github</a>} />}
+                                  content = {<a target = "_blank" title = "Check out my repos" href = {"https://github.com/" + github}>Github</a>} />}
           {linkedin && <List.Item icon = "linkedin"
-                                  content = {<a href={"https://linkedin.com/in/" + linkedin} target="_blank">LinkedIn</a>} />}
+                                  content = {<a target = "_blank" title = "Connect with me" href = {"https://linkedin.com/in/" + linkedin}>LinkedIn</a>} />}
           {resume   && <List.Item icon = "file pdf outline"
-                                  content = {<a href={"https://docs.google.com/viewer?url=" + resume} target="_blank">Resume (PDF)</a>} />}
+                                  content = {<a target = "_blank" title = "View my resume" href = {"https://docs.google.com/viewer?url=" + resume}>Resume (PDF)</a>} />}
         </List>
       </Segment>
     );

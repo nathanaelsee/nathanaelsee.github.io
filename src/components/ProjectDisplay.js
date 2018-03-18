@@ -13,7 +13,7 @@ class ProjectDisplay extends Component {
 
     // Generate boolean map of tags for toggling
     var currTags = {};
-    allTags.map(tag => currTags = Object.assign({}, currTags, {[tag]: true}));
+    allTags.map(tag => currTags = Object.assign({}, currTags, {[tag]: false}));
 
     this.state = { allTags, currTags };
   }
@@ -25,9 +25,15 @@ class ProjectDisplay extends Component {
   }
 
   checkVisible = (tags) => {
+
+    // Check if no tags are currently toggled
+    if(Object.values(this.state.currTags).every(val => (val === false))) {
+      return true;
+    }
+
+    // Otherwise display only if there is some matching toggle tag
     for(var i = 0, len = tags.length; i < len; i++) {
       if(this.state.currTags[tags[i]]) {
-        console.log(tags);
         return true;
       }
     }
@@ -42,7 +48,8 @@ class ProjectDisplay extends Component {
       <Container text textAlign = "left">
         <Header as = "h2" content = "Projects"/>
         <Segment attached = "top" inverted>
-          {allTags.map(tag => (<Button compact basic = {!currTags[tag]} key = {tag} value = {tag} content = {tag} color = "orange" onClick = {this.toggleTag}/>))}
+          <Header content = "Filter by tag:" size = "small"/>
+          {allTags.map(tag => (<Button compact size = "small" basic = {!currTags[tag]} key = {tag} value = {tag} content = {tag} color = "orange" onClick = {this.toggleTag}/>))}
         </Segment>
         <Segment attached = "bottom">
           {projects.map(project =>

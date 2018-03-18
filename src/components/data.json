@@ -16,8 +16,13 @@
   "projects": [
     {
       "title": "Halecoin",
-      "description": ["test", "testing"],
-      "tags": ["React", "Node.js"]
+      "description": [
+        "Won 'Best Overall Hack' & 'Best Social Hack' for a new Ethereum-based cryptocoin mined by doing exercise.", 
+        "Implemented an asynchronous pushup detection algorithm in Node.js, parsing real-time data from OpenPose, a deep learning library which extracts motion capture data from real-time webcam input.",
+        "Implemented exponential running average on detection algorithm output for callbacks to Firebase backend.",
+        "Worked on React front-end for demo of proof-of-concept during hackathon judging stage."        
+      ],
+      "tags": ["React", "Node.js", "Firebase", "Ethereum", "OpenPose"]
     },
     {
       "title": "Rote",

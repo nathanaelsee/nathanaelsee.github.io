@@ -51,6 +51,7 @@ class ProjectDisplay extends Component {
           <Header content = "Filter by tag:" size = "small"/>
           {Object.keys(currTags).sort().map(tag =>
             (<Button compact size = "small" color = {this.props.color}
+              className = "Tag"
               basic = {!currTags[tag]}
               key = {tag}
               value = {tag}
@@ -88,7 +89,7 @@ class ProjectItem extends Component {
             </Segment>
           </Segment>
           <Segment attached>
-            {tags.map(tag => (<Label key = {tag} content = {tag} color = {this.props.color} size = "large"/>))}
+            {tags.map(tag => (<Label className = "Tag" key = {tag} content = {tag} color = {this.props.color} size = "large"/>))}
           </Segment>
           <Segment attached = "bottom" size = "large">
             {description && <List relaxed items = {description} />}

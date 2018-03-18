@@ -2,6 +2,10 @@ body {
   text-align: center;
 }
 
+.Tag {
+  margin: 0.2em!important;
+}
+
 a {
   color: #f2711c!important;
 }

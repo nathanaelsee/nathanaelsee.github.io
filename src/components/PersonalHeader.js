@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, List, Segment, Divider } from "semantic-ui-react";
+import { Header, List, Segment } from "semantic-ui-react";
 import "./App.css";
 
 class PersonalHeader extends Component {
@@ -9,8 +9,7 @@ class PersonalHeader extends Component {
 
     return (
       <Segment basic inverted textAlign = "center" fluid>
-        <Header inverted as = "h1" image = {logo} content = {name.first + " " + name.last} subheader = {description} />
-        <Divider inverted />
+        <Header inverted dividing as = "h1" image = {logo} content = {name.first + " " + name.last} subheader = {description} />
         <List horizontal size = "large" style = {{margin: "0"}}>
           {location && <List.Item icon = "marker"
                                   content = {location} />}

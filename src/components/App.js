@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <div className="App">
         <PersonalHeader info = {info}/>
-        <ProjectDisplay projects = {projects}/>
+        <ProjectDisplay projects = {projects} color = "orange"/>
       </div>
     );
   }

@@ -1,0 +1,29 @@
+{
+
+  "info": {
+    "name": {
+      "first": "Nathanael",
+      "last": "See"
+    },
+    "description": "Sophomore at UC San Diego, B.S Computer Science 2020",
+    "location": "San Diego, CA",
+    "email": "nathanaelsee@yahoo.com",
+    "github": "nathanaelsee",
+    "linkedin": "nathanaelsee",
+    "resume": "https://docs.google.com/document/d/10r_CPO4m64JiRzIXrexidT37pvxxwoBVNsi_xR6ltiE/export?format=pdf"
+  },
+
+  "projects": [
+    {
+      "title": "Halecoin",
+      "description": ["test", "testing"],
+      "tags": ["React", "Node.js"]
+    },
+    {
+      "title": "Rote",
+      "description": ["test"],
+      "tags": ["Android"]
+    }
+  ]
+
+}

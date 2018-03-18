@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+
+import PersonalHeader from "./PersonalHeader";
+import ProjectDisplay from "./ProjectDisplay";
+import "./App.css";
+import logo from "./ns-white.png";
+import data from "./data.json";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "Nathanael See"
-    };
-  }
-
   render() {
+    var {info, projects} = data;
+    info = {...info, logo: logo};
+
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">{this.state.name}</h1>
-        </header>
-        <p className="App-intro">
-          Work in progress - check back later!
-        </p>
+        <PersonalHeader info = {info}/>
+        <ProjectDisplay projects = {projects}/>
       </div>
     );
   }

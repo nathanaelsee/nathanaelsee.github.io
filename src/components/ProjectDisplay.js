@@ -83,7 +83,7 @@ class ProjectItem extends Component {
           <Segment attached = "top" clearing>
             <Header size = "large" content = {title} subheader = {subtitle} floated = "left"  style = {{margin:0, padding: 0}}/>
             <Segment basic floated = "right" style = {{margin:0, padding: 0}}>
-              {github && <a title = {github} href = {"https://github.com/" + github} target = "_blank">
+              {github && <a title = {github} href = {"https://github.com/" + github} target = "_blank" rel = "noopener noreferrer">
                 <div><Icon size = "big" link name = "github"/>{github}</div>
               </a>}
             </Segment>

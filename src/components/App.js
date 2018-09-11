@@ -8,21 +8,18 @@ import logo from "./ns-white.png";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+    info: null,
+    projects: null
+  };
 
-    this.state = {
-      info: null,
-      projects: null
-    };
-
+  componentDidMount() {
     database.ref("info").on("value", (snapshot) => {
       var info = snapshot.val();
       info = {...info, logo: logo};
       this.setState({info});
     });
     database.ref("projects").on("value", (snapshot) => this.setState({projects: snapshot.val()}));
-
   }
 
   render() {
@@ -30,8 +27,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.state.info && <PersonalHeader info = {info}/>}
-        {this.state.projects && <ProjectDisplay projects = {projects} color = "orange"/>}
+        <PersonalHeader info = {info}/>
+        <ProjectDisplay projects = {projects} color = "orange"/>
       </div>
     );
   }

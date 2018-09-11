@@ -4,8 +4,26 @@ import "./App.css";
 
 class PersonalHeader extends Component {
 
+  state = {
+    info: {
+      name: {
+        first: "Loading...",
+        last: " "
+      },
+      description: " ",
+    }
+  };
+
+  // Load in info to state from props
+  static getDerivedStateFromProps(props, state) {
+    if (props && props.info && props.info !== state.info) {
+      return {info: props.info};
+    }
+    return null;
+  }
+
   render() {
-    const {name, logo, description, location, email, github, linkedin, resume} = this.props.info;
+    const {name, logo, description, location, email, github, linkedin, resume} = this.state.info;
 
     return (
       <Segment basic inverted textAlign = "center">

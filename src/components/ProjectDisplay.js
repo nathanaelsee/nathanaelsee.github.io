@@ -4,18 +4,25 @@ import "./App.css";
 
 class ProjectDisplay extends Component {
 
-  constructor(props) {
-    super(props);
+  state = {
+    currTags: {},
+    projects: []
+  };
 
-    // Generate list of all tags on projects
-    var allTags = [];
-    this.props.projects.map(project => allTags = [...allTags, ...project.tags]);
+  // Load in projects and tags when props update
+  static getDerivedStateFromProps(props, state) {
+    if(props && props.projects && props.projects !== state.projects) {
+      var {currTags} = state;
 
-    // Generate boolean map of tags for toggling
-    var currTags = {};
-    allTags.map(tag => currTags = Object.assign({}, currTags, {[tag]: false}));
-
-    this.state = { currTags };
+      // Generate boolean map of tags for toggling
+      props.projects.map(project =>
+        project.tags.map(tag =>
+          currTags[tag] = (currTags[tag] === undefined) ? false : currTags[tag]
+        )
+      );
+      return {currTags, projects: props.projects};
+    }
+    return null;
   }
 
   toggleTag = (event, {value}) => {
@@ -25,7 +32,6 @@ class ProjectDisplay extends Component {
   }
 
   checkVisible = (tags) => {
-
     // Check if no tags are currently toggled
     if(Object.values(this.state.currTags).every(val => (val === false))) {
       return true;
@@ -41,8 +47,7 @@ class ProjectDisplay extends Component {
   }
 
   render() {
-    const {projects} = this.props;
-    const {currTags} = this.state;
+    const {currTags, projects} = this.state;
 
     return (
       <Container text textAlign = "left" style = {{margin: "2em"}}>
@@ -62,8 +67,10 @@ class ProjectDisplay extends Component {
           )}
         </Segment>
         <Segment attached = "bottom">
-          {projects.map(project =>
-              (<ProjectItem color = {this.props.color} key = {project.title} project = {project} visible = {this.checkVisible(project.tags)}/>
+          {projects.map(project => (<ProjectItem color = {this.props.color}
+                                                 key = {project.title}
+                                                 project = {project}
+                                                 visible = {this.checkVisible(project.tags)}/>
           ))}
         </Segment>
       </Container>

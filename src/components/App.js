@@ -1,21 +1,37 @@
 import React, { Component } from "react";
 
+import database from "./firebase";
 import PersonalHeader from "./PersonalHeader";
 import ProjectDisplay from "./ProjectDisplay";
 import "./App.css";
 import logo from "./ns-white.png";
-import data from "./data.json";
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      info: null,
+      projects: null
+    };
+
+    database.ref("info").on("value", (snapshot) => {
+      var info = snapshot.val();
+      info = {...info, logo: logo};
+      this.setState({info});
+    });
+    database.ref("projects").on("value", (snapshot) => this.setState({projects: snapshot.val()}));
+
+  }
+
   render() {
-    var {info, projects} = data;
-    info = {...info, logo: logo};
+    var {info, projects} = this.state;
 
     return (
       <div className="App">
-        <PersonalHeader info = {info}/>
-        <ProjectDisplay projects = {projects} color = "orange"/>
+        {this.state.info && <PersonalHeader info = {info}/>}
+        {this.state.projects && <ProjectDisplay projects = {projects} color = "orange"/>}
       </div>
     );
   }

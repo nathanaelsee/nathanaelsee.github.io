@@ -1,0 +1,48 @@
+version: 2 # circleci version
+jobs:
+  build:
+    branches:
+      only: source
+
+    docker:
+      # node version to run on
+      - image: circleci/node:latest
+
+    working_directory: ~/nathanaelsee.github.io
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      # ensure npm is ^6.0.0 for npm ci
+      - run:
+          name: Install dependencies
+          command: |
+            if [ ! -d node_modules ]; then
+              sudo npm install -g npm@$NPM_VERSION
+              npm ci
+            fi
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # Set up account & key for deploy push
+      - run:
+          name: Set up github details
+          command: |
+            git config --global user.email "nathanaelsee@gmail.com"
+            git config --global user.name "nathanaelsee"
+      - add_ssh_keys:
+          fingerprints:
+            - "8c:5b:ba:d7:49:d3:17:b9:d4:b4:68:10:32:45:fb:5c"
+
+      # deploy to ghpages
+      - run: npm run deploy

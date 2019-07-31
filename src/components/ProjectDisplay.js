@@ -13,14 +13,28 @@ class ProjectDisplay extends Component {
   static getDerivedStateFromProps(props, state) {
     if(props && props.projects && props.projects !== state.projects) {
       var {currTags} = state;
+      var {projects} = props;
 
-      // Generate boolean map of tags for toggling
-      props.projects.map(project =>
-        project.tags.map(tag =>
+      for(var index in projects) {
+        var project = projects[index]
+        // Sanitize project objects
+        project.date = project.date || "";
+        project.description = project.description || [];
+        project.github = project.github || "";
+        project.subtitle = project.subtitle || "";
+        project.tags = project.tags || [];
+        project.title = project.title || "";
+        // Generate boolean map of tags for toggling
+        for(var tagIndex in project.tags) {
+          var tag = project.tags[tagIndex]
           currTags[tag] = (currTags[tag] === undefined) ? false : currTags[tag]
-        )
-      );
-      return {currTags, projects: props.projects};
+        }
+      }
+
+      // Sort projects by date strings
+      projects.sort((a, b) => (a.date < b.date) ? 1 : -1);
+
+      return {currTags, projects};
     }
     return null;
   }
@@ -55,23 +69,28 @@ class ProjectDisplay extends Component {
         <Segment attached = "top" inverted>
           <Header content = "Filter by tag:" size = "small"/>
           {Object.keys(currTags).sort().map(tag =>
-            (<Button compact size = "small" color = {this.props.color}
+            (<Button 
+              compact 
+              size = "small" 
+              color = {this.props.color}
               className = "Tag"
               basic = {!currTags[tag]}
               key = {tag}
               value = {tag}
               content = {tag}
               onClick = {this.toggleTag}
-              />
-            )
+            />)
           )}
         </Segment>
         <Segment attached = "bottom">
-          {projects.map(project => (<ProjectItem color = {this.props.color}
-                                                 key = {project.title}
-                                                 project = {project}
-                                                 visible = {this.checkVisible(project.tags)}/>
-          ))}
+          {projects.map(project => 
+            (<ProjectItem 
+              color = {this.props.color}
+              key = {project.title}
+              project = {project}
+              visible = {this.checkVisible(project.tags)}
+            />)
+          )}
         </Segment>
       </Container>
     );
